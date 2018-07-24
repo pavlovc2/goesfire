@@ -73,7 +73,7 @@ batch_process <- function(url, download_path, output_path, outname,
                           calc_emissions = FALSE, feer = NULL) {
 
   filenames <- RCurl::getURL(url, ftp.use.epsv = FALSE, dirlistonly = TRUE)
-  filenames <- unlist(strsplit(filenames, "\r\n"))
+  filenames <- stri_split_lines1(filenames)
   # ncdf files only
   files <- filenames[grepl(utils::glob2rx("*.nc"), filenames)]
   # CONUS only
