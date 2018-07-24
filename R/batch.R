@@ -20,6 +20,7 @@
 #' @return A data frame of processed fire data, and the original file downloaded in
 #'   download_path
 #' @export
+#' @import stringi
 #'
 #' @examples
 download_and_process <- function(filename, url, download_path,
@@ -28,14 +29,14 @@ download_and_process <- function(filename, url, download_path,
                                  calc_emissions = FALSE, feer = NULL) {
 
   # Only process the file if it doesn't exist locally (we've already done those)
-  if (fs::file_exists(fs::path(download_path, filename))) {
+  if (file.exists(file.path(download_path, filename))) {
     print(paste0("Skipping ", filename))
     return(NULL)
   } else {
     print(paste0("Processing ", filename))
-    utils::download.file(paste0(url, filename), paste0(download_path, filename),
+    utils::download.file(paste0(url, filename), file.path(download_path, filename),
                          mode = "wb", quiet = TRUE)
-    infile <- fs::path(download_path, filename)
+    infile <- file.path(download_path, filename)
     df <- extract_fires(infile, vars = vars, maskvals = maskvals)
     if (calc_emissions) {
       if (is.null(feer)) {
