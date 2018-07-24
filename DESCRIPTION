@@ -19,7 +19,8 @@ Imports:
   RCurl,
   readr,
   rlang,
-  tidyr
+  tidyr,
+  stringi
 Suggests:
   cowplot,
   DT,
